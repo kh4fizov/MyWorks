@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+
+/*
+ 1.	С помощью класса XmlDocument прочитать XML файл и вывести название всех его тегов с сохранением иерархии. В качестве отступов для иерархии использовать 2 пробела.
+     */
+
+namespace PracticXml
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<User> users = new List<User>();
+            XmlDocument document = new XmlDocument();
+            document.Load("XmlFile.xml");
+            XmlElement root = document.DocumentElement;
+
+            string space = "\t";
+
+            foreach (XmlElement element in root)
+            {
+                User user = new User();
+
+                user.Id = element["id"].Name;
+                Console.WriteLine(space + user.Id);
+
+                user.Login = element["login"].Name;
+                Console.WriteLine(space + user.Login);
+
+                user.Password = element["password"].Name;
+                Console.WriteLine(space + user.Password + '\n');
+
+                space += "\t";
+
+                users.Add(user);
+            }
+
+            Console.ReadLine();
+        }
+    }
+}
